@@ -1,7 +1,9 @@
-import express from "express";
+const express = require("express");
 
-export default function createServer() {
+function createServer() {
 	const app = express();
 
 	return app;
 }
+
+module.exports = createServer;

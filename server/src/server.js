@@ -1,4 +1,4 @@
-import createApp from "./app.js";
+const createApp = require("./app");
 
 const app = createApp();
 
