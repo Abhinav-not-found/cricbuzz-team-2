@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 const z = require("zod");
+const constants = require("../constants/app.constant");
 
 dotenv.config({ quite: true });
 
@@ -18,7 +19,7 @@ const envSchema = z.object({
 	GOOGLE_CALLBACK_URL: z.string(),
 });
 
-const parsed = z.safeParse(process.env);
+const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
 	console.log("Check your Env");
