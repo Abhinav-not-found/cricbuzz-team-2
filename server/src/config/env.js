@@ -2,11 +2,11 @@ const dotenv = require("dotenv");
 const z = require("zod");
 const constants = require("../constants/app.constant");
 
-dotenv.config({ quite: true });
+dotenv.config({ quiet: true });
 
 const envSchema = z.object({
-	PORT: z.coerce.number().default(),
-	MONGODB_URI: z.string().default(),
+	PORT: z.coerce.number().default(constants.PORT),
+	MONGODB_URI: z.string().default(constants.MONGO_URI),
 	JWT_SECRET_ACCESS: z.string(),
 	JWT_SECRET_REFRESH: z.string(),
 	NODE_ENV: z.string(),

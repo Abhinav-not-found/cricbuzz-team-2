@@ -1,11 +1,19 @@
 const createApp = require("./app");
+const env = require("./config/env");
+const connectDb = require("./database/database");
 
 const app = createApp();
 
 function startServer() {
-	app.listen(3000, () => {
-		console.log("Server started on port: ", 3000);
-	});
+	connectDb()
+		.then(() => {
+			app.listen(env.PORT, () => {
+				console.log("\x1b[46mServer started on port:\x1b[0m", env.PORT);
+			});
+		})
+		.catch((e) => {
+			console.log("Error while starting server", e);
+		});
 }
 
 startServer();
