@@ -1,5 +1,7 @@
 # cricbuzz-team-2
 
+
+
 ### Leader: Abhinav kumar
 ### Members:
 - Abdul Ayub Ali
@@ -40,3 +42,4 @@ git pull origin main
 ```
 - Before creating PR, make sure your code runs without errors.
 - Do not Delete your branch after every task. Use same branch to do all tasks.
+- Do not install packages, unless your are told to do. [Inform the leader if doing so]
