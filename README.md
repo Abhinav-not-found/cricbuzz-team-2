@@ -1,7 +1,7 @@
 # cricbuzz-team-2
 
-Leader: Abhinav kumar
-members:
+### Leader: Abhinav kumar
+### Members:
 - Abdul Ayub Ali
 - Arun Vats
 - Aman Sharma
