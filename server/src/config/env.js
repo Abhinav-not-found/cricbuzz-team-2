@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 const z = require("zod");
-const constants = require("../constants/app.constant");
+const { constants } = require("../constants/app.constant");
 
 dotenv.config({ quiet: true });
 
