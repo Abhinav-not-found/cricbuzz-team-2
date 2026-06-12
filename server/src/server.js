@@ -13,7 +13,7 @@ function startServer() {
 			});
 		})
 		.catch((e) => {
-			logger .error({ error:e },"Error while starting server", e);
+			logger.error({ error:e },"Error while starting server", e);
 		});
 }
 
