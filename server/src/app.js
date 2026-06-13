@@ -13,6 +13,25 @@ function createServer() {
     app.use(morgan("dev"));
   }
   app.use("/api/user", router);
+const passport = require("passport");
+
+const PassportConfig = require("./config/passport");
+const googleAuthRouter = require("./modules/auth/google/google.route");
+
+function createServer() {
+  const app = express();
+
+  securityMiddleware(app);
+  
+  PassportConfig.initialize();
+  app.use(passport.initialize());
+  
+  if (env.NODE_ENV === "development") {
+    app.use(morgan("dev"));
+  }
+
+  app.use("/api/auth", googleAuthRouter);
+
   return app;
 }
 
