@@ -1,38 +1,32 @@
 const express = require("express");
-const env = require("./config/env");
-const morgan = require("morgan");
-const securityMiddleware = require("./middlewares/security.middleware");
-const router = require("./routes/user.routes.js");
-
-function createServer() {
-  const app = express();
-
-  securityMiddleware(app);
-
-  if (env.NODE_ENV === "development") {
-    app.use(morgan("dev"));
-  }
-  app.use("/api/user", router);
 const passport = require("passport");
-
+const morgan = require("morgan");
+const env = require("./config/env");
+const securityMiddleware = require("./middlewares/security.middleware");
 const PassportConfig = require("./config/passport");
-const googleAuthRouter = require("./modules/auth/google/google.route");
+const authRoutes = require("./modules/auth/auth.route");
 
 function createServer() {
-  const app = express();
+	const app = express();
 
-  securityMiddleware(app);
-  
-  PassportConfig.initialize();
-  app.use(passport.initialize());
-  
-  if (env.NODE_ENV === "development") {
-    app.use(morgan("dev"));
-  }
+	// Security middlewares
+	securityMiddleware(app);
 
-  app.use("/api/auth", googleAuthRouter);
+	// Passport
+	PassportConfig.initialize();
+	app.use(passport.initialize());
 
-  return app;
+	// Logger
+	if (env.NODE_ENV === "development") {
+		app.use(morgan("dev"));
+	}
+
+	app.get("/", (_, res) => {
+		res.send("CricBuzz backend is running");
+	});
+	app.use("/api/auth", authRoutes);
+
+	return app;
 }
 
 module.exports = createServer;

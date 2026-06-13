@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
 		role: {
 			type: String,
 			enum: Object.values(ROLES),
-			default: ROLES,
+			default: ROLES.SCORER,
 		},
 		isDeleted: {
 			type: Boolean,
