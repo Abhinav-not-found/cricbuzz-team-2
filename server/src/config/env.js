@@ -22,7 +22,7 @@ const envSchema = z.object({
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
-	console.log("Check your Env");
+	throw new Error("Check your Env");
 }
 
 module.exports = parsed.data;

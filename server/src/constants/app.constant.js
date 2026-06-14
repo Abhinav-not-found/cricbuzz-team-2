@@ -7,7 +7,7 @@ const constants = {
 	RATELIMIT: 1000,
 };
 
-const app_config = {
+app_config = {
 	jwt: {
 		refreshToken: {
 			expiresIn: "30D",
@@ -32,7 +32,4 @@ const app_config = {
 	},
 };
 
-module.exports = {
-	constants,
-	app_config,
-};
+module.exports = {constants, app_config};

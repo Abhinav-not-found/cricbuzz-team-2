@@ -1,4 +1,5 @@
 const env = require("../../config/env");
+
 const cookieOptions = {
 	httpOnly: true,
 	secure: env.NODE_ENV === "production",
