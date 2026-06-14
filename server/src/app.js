@@ -8,6 +8,7 @@ const securityMiddleware = require("./middlewares/security.middleware");
 const PassportConfig = require("./config/passport");
 const authRoutes = require("./modules/auth/auth.route");
 const userRoutes = require("./modules/user/user.route");
+const playerRoutes = require("./modules/player/player.route");
 
 function createServer() {
 	const app = express();
@@ -26,7 +27,6 @@ function createServer() {
 	});
 	app.use("/api/auth", authRoutes);
 	app.use("/api/player", playerRoutes);
-	app.use("/api/users", userRoutes);
 	app.use("/api/users", userRoutes);
 
 	app.use(NotFoundHandler.handle);
