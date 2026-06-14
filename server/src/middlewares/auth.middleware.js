@@ -12,6 +12,7 @@ class AuthMiddleware {
 
 			req.user = {
 				id: decoded.id,
+				role: decoded.role,
 			};
 
 			next();
@@ -38,7 +39,9 @@ class AuthMiddleware {
 
 				next();
 			} catch (error) {
-				next(error instanceof ApiError ? error : new ApiError(403, "Forbidden"));
+				next(
+					error instanceof ApiError ? error : new ApiError(403, "Forbidden"),
+				);
 			}
 		};
 	}
