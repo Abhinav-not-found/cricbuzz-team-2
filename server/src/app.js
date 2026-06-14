@@ -33,6 +33,7 @@ function createServer() {
 	app.use("/api/users", userRoutes);
 	app.use("/api/player", playerRoutes);
 	app.use("/api/users", userRoutes);
+	app.use("/api/users", userRoutes);
 
 	app.use(NotFoundHandler.handle);
 	app.use(ErrorHandlerMiddleware.handle);
