@@ -32,11 +32,18 @@ const AdminLayout = () => {
               Players Page
             </Link>
 
+
             <Link
               to="/admin/teams"
               className="p-3 rounded-lg hover:bg-slate-800 hover:text-white transition-colors duration-150 font-medium block"
             >
               Teams Page
+            </Link>
+                      <Link
+              to="/admin/series"
+              className="p-3 rounded-lg hover:bg-slate-800 hover:text-white transition-colors duration-150 font-medium block"
+            >
+              Series Page
             </Link>
           </nav>
         </div>
