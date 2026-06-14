@@ -1,4 +1,6 @@
-import LogoutBtn from "@/shared/components/ui/LogoutBtn"
+import React from "react";
+import { Link, Outlet } from "react-router";
+import LogoutBtn from "@/shared/components/ui/LogoutBtn";
 
 const AdminDashboardPage = () => {
   return (
@@ -9,7 +11,7 @@ const AdminDashboardPage = () => {
         <LogoutBtn />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminDashboardPage
+export default AdminDashboardPage;
