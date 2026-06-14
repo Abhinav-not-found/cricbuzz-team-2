@@ -1,5 +1,5 @@
 const constants = {
-	PORT: 3000,
+	PORT: 8000,
 	MONGO_URI: "mongodb://localhost:27017/crickbuzz",
 	NODE_ENV: "development",
 	LOGGER_LEVEL: "info",

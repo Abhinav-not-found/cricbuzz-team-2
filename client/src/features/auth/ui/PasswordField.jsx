@@ -20,7 +20,7 @@ const PasswordField = ({ register, errors }) => {
                 !value.includes(" ") || "Password cannot contain spaces",
             },
           })}
-          type='password'
+          type='text'
           placeholder='••••••••'
           className={`w-full h-10 pl-3 pr-10 text-sm border border-gray-300 rounded-[10px] bg-white text-gray-900 transition-all focus:border-[#1a1a2e] focus:ring-2 focus:ring-[#1a1a2e]/10 ${errors.password ? "border-red-500 outline-red-500" : "border-neutral-300"}`}
         />
