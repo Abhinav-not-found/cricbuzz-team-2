@@ -25,8 +25,11 @@ function createServer() {
 		res.send("CricBuzz backend is running");
 	});
 	app.use("/api/auth", authRoutes);
+<<<<<<< HEAD
 	app.use("/api/player", playerRoutes);
 	app.use("/api/users", userRoutes);
+=======
+>>>>>>> c035dfa (adding some functionality)
 	app.use("/api/users", userRoutes);
 
 	app.use(NotFoundHandler.handle);
