@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { lazy, Suspense } from "react";
 
-// Layouts — ye eager load honge (chhote hain)
+// Layouts — 
 import AuthLayout from "../layouts/AuthLayout";
 import PublicLayout from "../layouts/PublicLayout";
 import AdminLayout from "../layouts/AdminLayout";
@@ -114,13 +114,13 @@ const AppRoutes = () => {
                     element: <ScoreCardPage />
                 },
                 {
-                    path: '/matches/:id/commentary',
+                    path: 'matches/:id/commentary',
                     element: <CommentaryFeedPage />
                 }
             ]
         },
 
-
+        
 
         // Admin Routes
         {
@@ -145,12 +145,12 @@ const AppRoutes = () => {
                 },
                 {
                     path: 'teams',
-                    element: <AdminTeamPage /> 
+                    element: <AdminTeamPage />
                 },
                 {
                     path: 'teams/new',
                     element: <TeamFormPage />
-                }, 
+                },
                 {
                     path: 'teams/:id/edit',
                     element: <TeamFormPage />
@@ -162,19 +162,19 @@ const AppRoutes = () => {
                 {
                     path: 'players',
                     element: <AdminPlayerPage />
-                }, 
+                },
                 {
                     path: 'players/new',
-                    element: <PlayerFormPage /> 
-                }, 
-                {
-                    path: 'player/:id/edit',
                     element: <PlayerFormPage />
                 },
                 {
-                    path: 'matches', 
+                    path: 'players/:id/edit',
+                    element: <PlayerFormPage />
+                },
+                {
+                    path: 'matches',
                     element: <AdminMatchPage />
-                }, 
+                },
                 {
                     path: 'matches/new',
                     element: <MatchFormPage />
@@ -215,12 +215,12 @@ const AppRoutes = () => {
                 },
                 {
                     path: 'teams',
-                    element: <SuperAdminTeamPage /> 
+                    element: <SuperAdminTeamPage />
                 },
                 {
                     path: 'teams/new',
                     element: <TeamFormPage />
-                }, 
+                },
                 {
                     path: 'teams/:id/edit',
                     element: <TeamFormPage />
@@ -232,19 +232,19 @@ const AppRoutes = () => {
                 {
                     path: 'players',
                     element: <SuperAdminPlayerPage />
-                }, 
+                },
                 {
                     path: 'players/new',
-                    element: <PlayerFormPage /> 
-                }, 
-                {
-                    path: 'player/:id/edit',
                     element: <PlayerFormPage />
                 },
                 {
-                    path: 'matches', 
+                    path: 'players/:id/edit',
+                    element: <PlayerFormPage />
+                },
+                {
+                    path: 'matches',
                     element: <SuperAdminMatchPage />
-                }, 
+                },
                 {
                     path: 'matches/new',
                     element: <MatchFormPage />
@@ -270,11 +270,11 @@ const AppRoutes = () => {
                 {
                     path: 'matches',
                     element: <ScorerMatchesPage />
-                }, 
+                },
                 {
                     path: 'matches/:id/toss',
                     element: <TossPage />
-                }, 
+                },
                 {
                     path: 'matches/:id/playing-xi',
                     element: <PlayingXIPage />
@@ -282,7 +282,7 @@ const AppRoutes = () => {
                 {
                     path: 'matches/:id/scoring',
                     element: <ScoringPage />
-                }, 
+                },
                 {
                     path: 'matches/:id/commentary',
                     element: <CommentaryEntryPage />
@@ -294,10 +294,13 @@ const AppRoutes = () => {
             ]
         }
     ])
-    
+
     return (
-        <Suspense fallback={<h1>Loading...</h1>}>
-             <RouterProvider router={router} />
+        <Suspense
+            fallback={<h1 className="text-center text-4xl font-bold mt-12">Loading...</h1>}>
+
+            <RouterProvider router={router} />
+
         </Suspense>
     )
 }
