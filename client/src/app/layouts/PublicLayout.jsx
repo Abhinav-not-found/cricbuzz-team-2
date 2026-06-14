@@ -3,7 +3,6 @@ import { Navigate, Outlet } from "react-router"
 
 const PublicLayout = () => {
   const { user, isLoading } = useSelector((store) => store.auth)
-
   if (isLoading) return <p>Loading...</p>
 
   if (user) {

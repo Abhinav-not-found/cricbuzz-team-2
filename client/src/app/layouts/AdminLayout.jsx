@@ -2,9 +2,9 @@ import { useSelector } from "react-redux"
 import { Navigate, Outlet } from "react-router"
 
 const AdminLayout = () => {
-  const { user, isLoading } = useSelector((store) => store.auth)
+  const { user, authChecked } = useSelector((store) => store.auth)
 
-  if (isLoading) return <p>Loading...</p>
+  if (!authChecked) return <p>Loading...</p>
 
   if (!user) {
     return <Navigate to={"/"} />
