@@ -1,4 +1,4 @@
-const TeamModel = require("./team.model");
+const TeamModel = require("../models/team.model");
 
 class TeamRepository {
 	async create(payload) {
@@ -29,7 +29,7 @@ class TeamRepository {
 	async update(id, payload) {
 		return TeamModel.findByIdAndUpdate(id, payload, {
 			new: true,
-		});
+		}).populate();
 	}
 }
 

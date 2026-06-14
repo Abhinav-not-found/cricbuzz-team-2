@@ -6,7 +6,7 @@ class TeamController {
 	}
 
 	async createTeam(req, res) {
-		const data = await this.teamService.createTeam(req.body, req.user._id);
+		const data = await this.teamService.createTeam(req.body, req.user.id);
 
 		res.status(201).json({
 			success: true,
@@ -36,7 +36,7 @@ class TeamController {
 		const data = await this.teamService.updateTeam(
 			req.params.id,
 			req.body,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({
@@ -46,7 +46,7 @@ class TeamController {
 	}
 
 	async deleteTeam(req, res) {
-		await this.teamService.deleteTeam(req.params.id, req.user._id);
+		await this.teamService.deleteTeam(req.params.id, req.user.id);
 
 		res.json({
 			success: true,
@@ -58,7 +58,7 @@ class TeamController {
 		const data = await this.teamService.addPlayers(
 			req.params.id,
 			req.body.playerIds,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({
@@ -71,7 +71,7 @@ class TeamController {
 		const data = await this.teamService.removePlayers(
 			req.params.id,
 			req.body.playerIds,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({
