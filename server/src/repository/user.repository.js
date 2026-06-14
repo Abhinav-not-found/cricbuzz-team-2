@@ -13,9 +13,13 @@ class UserRepo {
 		return UserModel.findById(id);
 	}
 
+	async fetchMe(id) {
+		return UserModel.findById(id).select("-password -refreshToken");
+	}
+
 	async findAll() {
 		return UserModel.find();
 	}
 }
 
-module.exports = UserRepo
+module.exports = UserRepo;
