@@ -1,4 +1,6 @@
 const express = require("express");
+const ErrorHandlerMiddleware = require("./middleware/errorHandler.middleware");
+const NotFoundHandler = require("./shared/error/notFound.error");
 const passport = require("passport");
 const morgan = require("morgan");
 const env = require("./config/env");
@@ -9,6 +11,8 @@ const authRoutes = require("./modules/auth/auth.route");
 function createServer() {
 	const app = express();
 
+	app.use(NotFoundHandler.handle);
+	app.use(ErrorHandlerMiddleware.handle);
 	// Security middlewares
 	securityMiddleware(app);
 
