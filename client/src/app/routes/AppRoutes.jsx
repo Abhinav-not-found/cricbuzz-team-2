@@ -9,21 +9,6 @@ import ScorerLayout from "../layouts/ScorerLayout"
 import SuperAdminLayout from "../layouts/SuperAdminLayout"
 import { currentLoggedInUser } from "../slices/authAction"
 
-// login [done]
-// register [done]
-
-// home/landing/ series - [listing of series]
-// match -  team A vs team B
-
-// dashboard/admin/super admin - sidebar []
-// user {super admin}
-// teamPage
-// match
-// series
-// players
-// commentary
-// score
-
 // ─── Lazy imports ───
 // Auth Pages
 const LoginPage = lazy(() => import("@/features/auth/ui/LoginPage"))
@@ -218,7 +203,7 @@ const AppRoutes = () => {
           element: <TeamFormPage />,
         },
         {
-          path: "teams/:id/squad",
+          path: "teams/squad",
           element: <SquadPage />,
         },
         {
