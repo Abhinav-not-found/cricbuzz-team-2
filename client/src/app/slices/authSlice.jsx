@@ -6,6 +6,7 @@ const authSlice = createSlice({
   initialState: {
     user: null,
     isLoading: false,
+    authChecked: false,
   },
   reducers: {
     addUser: (state, action) => {
@@ -23,9 +24,11 @@ const authSlice = createSlice({
     })
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.user = action.payload
+      state.authChecked = true
       state.isLoading = false
     })
     builder.addCase(loginUser.rejected, (state) => {
+      state.authChecked = true
       state.isLoading = false
     })
 
@@ -34,9 +37,11 @@ const authSlice = createSlice({
     })
     builder.addCase(currentLoggedInUser.fulfilled, (state, action) => {
       state.user = action.payload
+      state.authChecked = true
       state.isLoading = false
     })
     builder.addCase(currentLoggedInUser.rejected, (state) => {
+      state.authChecked = true
       state.isLoading = false
     })
     builder.addCase(logoutUser.fulfilled, (state) => {
