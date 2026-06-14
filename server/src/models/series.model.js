@@ -12,8 +12,8 @@ const seriesSchema = new mongoose.Schema(
 		},
 		logo: { type: String, default: "" },
 		isDeleted: { type: Boolean, default: false },
-		createdBy: { type: Schema.Types.ObjectId, ref: "User" },
-		updatedBy: { type: Schema.Types.ObjectId, ref: "User" },
+		createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+		updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 	},
 	{ timestamps: true },
 );

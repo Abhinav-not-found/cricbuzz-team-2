@@ -1,4 +1,9 @@
+const MatchRepository = require("../../repository/match.repository");
+
 class MatchService {
+	constructor() {
+		this.matchRepository = new MatchRepository();
+	}
 	async createMatch(data, userId) {
 		if (data.team1 === data.team2) {
 			throw new ApiError(400, "Team 1 and Team 2 cannot be same");
@@ -10,9 +15,11 @@ class MatchService {
 			updatedBy: userId,
 		});
 	}
+
 	async getMatches() {
 		return this.matchRepository.findAll();
 	}
+
 	async getMatch(id) {
 		const match = await this.matchRepository.findById(id);
 
@@ -22,6 +29,7 @@ class MatchService {
 
 		return match;
 	}
+
 	async updateMatch(id, data, userId) {
 		const match = await this.matchRepository.findById(id);
 
@@ -34,6 +42,7 @@ class MatchService {
 			updatedBy: userId,
 		});
 	}
+
 	async deleteMatch(id, userId) {
 		const match = await this.matchRepository.findById(id);
 
@@ -46,6 +55,7 @@ class MatchService {
 			updatedBy: userId,
 		});
 	}
+
 	async updatePlayingXI(id, playingXI, userId) {
 		const match = await this.matchRepository.findById(id);
 
@@ -62,6 +72,7 @@ class MatchService {
 			updatedBy: userId,
 		});
 	}
+
 	async updateToss(id, tossData, userId) {
 		const match = await this.matchRepository.findById(id);
 
@@ -75,6 +86,7 @@ class MatchService {
 			updatedBy: userId,
 		});
 	}
+
 	async updateResult(id, resultData, userId) {
 		const match = await this.matchRepository.findById(id);
 
@@ -89,6 +101,7 @@ class MatchService {
 			updatedBy: userId,
 		});
 	}
+
 	async updateStatus(id, status, userId) {
 		const match = await this.matchRepository.findById(id);
 

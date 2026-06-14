@@ -3,7 +3,11 @@ const { MATCH_STATUS } = require("../constants/model.constant.js");
 
 const playingPlayerSchema = new mongoose.Schema(
 	{
-		player: { type: Schema.Types.ObjectId, ref: "Player", required: true },
+		player: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Player",
+			required: true,
+		},
 		isCaptain: { type: Boolean, default: false },
 		isWicketKeeper: { type: Boolean, default: false },
 	},
@@ -12,7 +16,11 @@ const playingPlayerSchema = new mongoose.Schema(
 
 const matchSchema = new mongoose.Schema(
 	{
-		seriesId: { type: Schema.Types.ObjectId, ref: "Series", required: true },
+		seriesId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Series",
+			required: true,
+		},
 		matchNumber: String,
 		venue: { type: String, required: true, trim: true },
 		startTime: { type: Date, required: true },
@@ -21,19 +29,27 @@ const matchSchema = new mongoose.Schema(
 			enum: Object.values(MATCH_STATUS),
 			default: MATCH_STATUS.UPCOMING,
 		},
-		team1: { type: Schema.Types.ObjectId, ref: "Team", required: true },
-		team2: { type: Schema.Types.ObjectId, ref: "Team", required: true },
-		tossWinner: { type: Schema.Types.ObjectId, ref: "Team" },
+		team1: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Team",
+			required: true,
+		},
+		team2: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Team",
+			required: true,
+		},
+		tossWinner: { type: mongoose.Schema.Types.ObjectId, ref: "Team" },
 		tossDecision: { type: String, enum: ["BAT", "BOWL"] },
 		playingXI: {
 			team1: [playingPlayerSchema],
 			team2: [playingPlayerSchema],
 		},
-		winner: { type: Schema.Types.ObjectId, ref: "Team" },
+		winner: { type: mongoose.Schema.Types.ObjectId, ref: "Team" },
 		result: String,
 		isDeleted: { type: Boolean, default: false },
-		createdBy: { type: Schema.Types.ObjectId, ref: "User" },
-		updatedBy: { type: Schema.Types.ObjectId, ref: "User" },
+		createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+		updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 	},
 	{ timestamps: true },
 );

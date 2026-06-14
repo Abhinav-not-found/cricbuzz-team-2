@@ -6,7 +6,7 @@ class SeriesController {
 	}
 
 	async createSeries(req, res) {
-		const data = await this.seriesService.createSeries(req.body, req.user._id);
+		const data = await this.seriesService.createSeries(req.body, req.user.id);
 
 		res.status(201).json({
 			success: true,
@@ -36,7 +36,7 @@ class SeriesController {
 		const data = await this.seriesService.updateSeries(
 			req.params.id,
 			req.body,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({
@@ -46,7 +46,7 @@ class SeriesController {
 	}
 
 	async deleteSeries(req, res) {
-		await this.seriesService.deleteSeries(req.params.id, req.user._id);
+		await this.seriesService.deleteSeries(req.params.id, req.user.id);
 
 		res.json({
 			success: true,

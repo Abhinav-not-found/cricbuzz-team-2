@@ -1,5 +1,5 @@
 const ApiError = require("../../shared/utils/ApiError");
-const SeriesRepository = require("./series.repository");
+const SeriesRepository = require("../../repository/series.repository");
 
 class SeriesService {
 	constructor() {
@@ -8,10 +8,7 @@ class SeriesService {
 
 	async createSeries(data, userId) {
 		const existingSeries = await this.seriesRepository.findByName(data.name);
-
-		if (existingSeries) {
-			throw new ApiError(409, "Series already exists");
-		}
+		if (existingSeries) throw new ApiError(409, "Series already exists");
 
 		return this.seriesRepository.create({
 			...data,

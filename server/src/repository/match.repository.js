@@ -1,4 +1,4 @@
-const MatchModel = require("./match.model");
+const MatchModel = require("../models/match.model");
 
 class MatchRepository {
 	async create(payload) {
