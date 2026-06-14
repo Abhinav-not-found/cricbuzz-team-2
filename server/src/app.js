@@ -1,5 +1,5 @@
 const express = require("express");
-const ErrorHandlerMiddleware = require("./middleware/errorHandler.middleware");
+const ErrorHandlerMiddleware = require("./middlewares/errorHandler.middleware");
 const NotFoundHandler = require("./shared/error/notFound.error");
 const passport = require("passport");
 const morgan = require("morgan");
@@ -11,16 +11,11 @@ const authRoutes = require("./modules/auth/auth.route");
 function createServer() {
 	const app = express();
 
-	app.use(NotFoundHandler.handle);
-	app.use(ErrorHandlerMiddleware.handle);
-	// Security middlewares
 	securityMiddleware(app);
 
-	// Passport
 	PassportConfig.initialize();
 	app.use(passport.initialize());
 
-	// Logger
 	if (env.NODE_ENV === "development") {
 		app.use(morgan("dev"));
 	}
@@ -29,6 +24,9 @@ function createServer() {
 		res.send("CricBuzz backend is running");
 	});
 	app.use("/api/auth", authRoutes);
+
+	app.use(NotFoundHandler.handle);
+	app.use(ErrorHandlerMiddleware.handle);
 
 	return app;
 }

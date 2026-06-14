@@ -14,7 +14,6 @@ class AuthController {
 		const result = await this.authService.register(req.body);
 
 		res.cookie("accessToken", result.accessToken, accessTokenOptions);
-
 		res.cookie("refreshToken", result.refreshToken, refreshTokenOptions);
 
 		return ApiResponse(res, 201, "Register successful", result.user);
@@ -24,7 +23,6 @@ class AuthController {
 		const result = await this.authService.login(req.body);
 
 		res.cookie("accessToken", result.accessToken, accessTokenOptions);
-
 		res.cookie("refreshToken", result.refreshToken, refreshTokenOptions);
 
 		return ApiResponse(res, 200, "Login successful", result.user);
@@ -34,10 +32,32 @@ class AuthController {
 		const result = await this.authService.googleLogin(req.user);
 
 		res.cookie("accessToken", result.accessToken, accessTokenOptions);
-
 		res.cookie("refreshToken", result.refreshToken, refreshTokenOptions);
 
 		return ApiResponse(res, 200, "Google login successful", result.user);
+	}
+
+	async refresh(req, res) {
+		const { accessToken } = await this.authService.refresh(
+			req.cookies.refreshToken,
+		);
+		res.cookie("accessToken", accessToken, accessTokenOptions);
+
+		return ApiResponse(res, 200, "Access token generated");
+	}
+
+	async me(req, res) {
+		const user = await this.authService.me(req.user?.id);
+		return ApiResponse(res, 200, "User data fetched", user);
+	}
+
+	async logout(req, res) {
+		await this.authService.logout(req.cookies.refreshToken);
+
+		res.clearCookie("accessToken", accessTokenOptions);
+		res.clearCookie("refreshToken", refreshTokenOptions);
+
+		return ApiResponse(res, 200, "Logout successful");
 	}
 }
 
