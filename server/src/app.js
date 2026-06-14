@@ -10,6 +10,8 @@ const authRoutes = require("./modules/auth/auth.route");
 const userRoutes = require("./modules/user/user.route");
 const playerRoutes = require("./modules/player/player.route");
 const teamRoute = require("./modules/team/team.route");
+const seriesRoute = require("./modules/series/series.route");
+const matchRoute = require("./modules/match/match.route");
 
 function createServer() {
 	const app = express();
@@ -30,6 +32,8 @@ function createServer() {
 	app.use("/api/users", userRoutes);
 	app.use("/api/player", playerRoutes);
 	app.use("/api/team", teamRoute);
+	app.use("/api/series", seriesRoute);
+	app.use("/api/match", matchRoute);
 
 	app.use(NotFoundHandler.handle);
 	app.use(ErrorHandlerMiddleware.handle);
