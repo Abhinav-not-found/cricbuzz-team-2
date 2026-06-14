@@ -1,4 +1,5 @@
-import { lazy, Suspense } from "react"
+import { lazy, Suspense, useEffect } from "react"
+import { useDispatch } from "react-redux"
 import { createBrowserRouter, RouterProvider } from "react-router"
 import AdminLayout from "../layouts/AdminLayout"
 // Layouts —
@@ -6,6 +7,7 @@ import AuthLayout from "../layouts/AuthLayout"
 import PublicLayout from "../layouts/PublicLayout"
 import ScorerLayout from "../layouts/ScorerLayout"
 import SuperAdminLayout from "../layouts/SuperAdminLayout"
+import { currentLoggedInUser } from "../slices/authAction"
 
 // ─── Lazy imports ───
 // Auth Pages
@@ -101,8 +103,13 @@ const CommentaryEntryPage = lazy(
 )
 
 const AppRoutes = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    ;(() => {
+      dispatch(currentLoggedInUser())
+    })()
+  }, [])
   let router = createBrowserRouter([
-    // Auth Routes
     {
       path: "/auth",
       element: <AuthLayout />,
@@ -334,7 +341,7 @@ const AppRoutes = () => {
   return (
     <Suspense
       fallback={
-        <h1 className='text-center text-4xl font-bold mt-12'>Loading...</h1>
+        <p className='text-center text-md font-bold mt-12'>Loading...</p>
       }
     >
       <RouterProvider router={router} />

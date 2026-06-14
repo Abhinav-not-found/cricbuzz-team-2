@@ -14,6 +14,19 @@ export const loginUser = createAsyncThunk(
     }
   },
 )
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (credentials, thunkApi) => {
+    try {
+      const res = await axiosInstance.post("/auth/register", credentials)
+      return res.data.data
+    } catch (error) {
+      return thunkApi.rejectWithValue(
+        error.response?.data?.message || "Register failed",
+      )
+    }
+  },
+)
 
 export const currentLoggedInUser = createAsyncThunk(
   "auth/me",

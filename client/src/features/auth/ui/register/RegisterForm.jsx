@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form"
 import Spinner from "@/shared/components/ui/Spinner"
 import useAuth from "../../hook/useAuth"
 import EmailField from "../EmailField"
+import NameField from "../NameField"
 import PasswordField from "../PasswordField"
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const {
     register,
     handleSubmit,
@@ -12,10 +13,10 @@ const LoginForm = () => {
     reset,
   } = useForm()
 
-  const { handleLogin } = useAuth(reset)
-
+  const { handleRegister } = useAuth(reset)
   return (
-    <form onSubmit={handleSubmit(handleLogin)}>
+    <form onSubmit={handleSubmit(handleRegister)}>
+      <NameField register={register} errors={errors} />
       <EmailField register={register} errors={errors} />
       <PasswordField register={register} errors={errors} />
       <button
@@ -25,14 +26,14 @@ const LoginForm = () => {
         {isSubmitting ? (
           <>
             <Spinner />
-            <p>signing in</p>
+            <p>Creating account...</p>
           </>
         ) : (
-          "Sign in"
+          "Create account"
         )}
       </button>
     </form>
   )
 }
 
-export default LoginForm
+export default RegisterForm
