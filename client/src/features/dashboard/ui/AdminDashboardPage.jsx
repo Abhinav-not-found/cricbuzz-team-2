@@ -1,8 +1,11 @@
-import React from 'react'
+import LogoutBtn from "@/shared/components/ui/LogoutBtn"
 
 const AdminDashboardPage = () => {
   return (
-    <div>AdminDashboardPage</div>
+    <div>
+      AdminDashboardPage
+      <LogoutBtn />
+    </div>
   )
 }
 

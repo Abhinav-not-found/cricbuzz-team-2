@@ -4,6 +4,7 @@ const {
 	refreshTokenOptions,
 } = require("../../shared/utils/cookie");
 const AuthService = require("./auth.service");
+const env = require("../../config/env");
 
 class AuthController {
 	constructor() {
@@ -34,7 +35,7 @@ class AuthController {
 		res.cookie("accessToken", result.accessToken, accessTokenOptions);
 		res.cookie("refreshToken", result.refreshToken, refreshTokenOptions);
 
-		return ApiResponse(res, 200, "Google login successful", result.user);
+		return res.redirect(`${env.CORS_ORIGIN}/admin?login=success`);
 	}
 
 	async refresh(req, res) {
