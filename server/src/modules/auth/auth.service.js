@@ -96,7 +96,6 @@ class AuthService {
 	}
 
 	async me(userId) {
-		console.log(userId);
 		const user = await this.userRepo.fetchMe(userId);
 
 		if (!user) throw new ApiError(404, "User not found");
