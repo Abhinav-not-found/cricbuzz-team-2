@@ -19,8 +19,9 @@ function securityMiddleware(app) {
     app.use(hpp())
     app.use(rateLimit({
         windowMs: env.RATELIMIT_WINDOWMS,
-        limit: env.RATELIMIT,
+        limit: env.NODE_ENV === 'development' ? env.RATELIMIT * 10 : env.RATELIMIT,
         legacyHeaders: true,
+        skip: (req) => req.method === 'OPTIONS',
         message: 'Too many requests try after some time'
     }))
 

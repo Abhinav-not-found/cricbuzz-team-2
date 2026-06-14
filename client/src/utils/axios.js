@@ -26,9 +26,10 @@ axiosInstance.interceptors.response.use(
 				await axiosInstance.post("/auth/refresh");
 				return axiosInstance(originalReq);
 			} catch (error) {
-				window.location.href = "/";
 				return Promise.reject(error);
 			}
 		}
+
+		return Promise.reject(error);
 	},
 );

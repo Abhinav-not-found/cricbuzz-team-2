@@ -53,13 +53,19 @@ class UserService {
 		const existingUser = await this.userRepo.findByEmail(data.email);
 		if (existingUser) throw new ApiError(409, "User already exists");
 
+		const allowedRoles = [ROLES.SCORER, ROLES.ADMIN];
+		const role = data.role || ROLES.SCORER;
+		if (!allowedRoles.includes(role)) {
+			throw new ApiError(400, "Invalid role");
+		}
+
 		const hashedPassword = await hashPassword(data.password);
 
 		const user = await this.userRepo.create({
 			name: data.name,
 			email: data.email,
 			password: hashedPassword,
-			role: ROLES.SCORER,
+			role,
 		});
 
 		return this.sanitizeUser(user);
