@@ -7,6 +7,8 @@ const env = require("./config/env");
 const securityMiddleware = require("./middlewares/security.middleware");
 const PassportConfig = require("./config/passport");
 const authRoutes = require("./modules/auth/auth.route");
+const userRoutes = require("./modules/user/user.route");
+const playerRoutes = require("./modules/player/player.route");
 
 function createServer() {
 	const app = express();
@@ -24,6 +26,8 @@ function createServer() {
 		res.send("CricBuzz backend is running");
 	});
 	app.use("/api/auth", authRoutes);
+	app.use("/api/users", userRoutes);
+	app.use("/api/player", playerRoutes);
 
 	app.use(NotFoundHandler.handle);
 	app.use(ErrorHandlerMiddleware.handle);

@@ -19,6 +19,7 @@ export const registerUser = createAsyncThunk(
   async (credentials, thunkApi) => {
     try {
       const res = await axiosInstance.post("/auth/register", credentials)
+      console.log(res.data)
       return res.data.data
     } catch (error) {
       return thunkApi.rejectWithValue(
