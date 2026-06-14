@@ -32,4 +32,6 @@ app_config = {
 	},
 };
 
-module.exports = {constants, app_config};
+const PLAYER_ROLES = ["BATSMAN", "BOWLER", "ALL_ROUNDER", "WICKET_KEEPER"];
+
+module.exports = { constants, app_config, PLAYER_ROLES };
