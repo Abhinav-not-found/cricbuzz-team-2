@@ -4,7 +4,7 @@ import SeriesCard from "./series/SeriesCard"
 
 const HomePage = () => {
   const [series, setSeries] = useState([])
-  console.log(series)
+  // console.log(series)
   useEffect(() => {
     getAllSeries(setSeries)
   }, [])

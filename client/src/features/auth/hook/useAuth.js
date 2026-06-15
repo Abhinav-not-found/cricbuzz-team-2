@@ -11,10 +11,12 @@ const useAuth = (reset) => {
 		try {
 			const user = await dispatch(loginUser(data)).unwrap();
 			if (user.role === "ADMIN") {
-				navigate("/admin");
+				navigate("/admin/players");
+			} else if (user.role === "SUPER_ADMIN") {
+				navigate("/super-admin");
 			} else {
-				navigate("/");
 				toast.error("Not an Admin: UnAuthorized");
+				navigate("/");
 			}
 			reset();
 		} catch (error) {
