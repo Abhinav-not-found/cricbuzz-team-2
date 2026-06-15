@@ -234,6 +234,10 @@ const AppRoutes = () => {
           element: <PlayerFormPage />,
         },
         {
+          path: "match",
+          element: <AdminMatchPage />,
+        },
+        {
           path: "matches",
           element: <AdminMatchPage />,
         },

@@ -7,40 +7,46 @@ const { ROLES } = require("../../constants/model.constant");
 const router = Router();
 const matchController = new MatchController();
 
-router.use(AuthMiddleware.authenticate, AuthMiddleware.authorize(ROLES.ADMIN));
+// Require authentication for all routes
+router.use(AuthMiddleware.authenticate);
 
-router.post(
-	"/",
-	asyncHandler(matchController.createMatch.bind(matchController)),
-);
+// All authenticated users can fetch matches
 router.get("/", asyncHandler(matchController.getMatches.bind(matchController)));
 router.get(
-	"/:id",
-	asyncHandler(matchController.getMatch.bind(matchController)),
+  "/:id",
+  asyncHandler(matchController.getMatch.bind(matchController)),
+);
+
+// Admin-only endpoints for creating, updating, deleting matches
+router.use(AuthMiddleware.authorize(ROLES.ADMIN, ROLES.SUPER_ADMIN));
+
+router.post(
+  "/",
+  asyncHandler(matchController.createMatch.bind(matchController)),
 );
 router.patch(
-	"/:id",
-	asyncHandler(matchController.updateMatch.bind(matchController)),
+  "/:id",
+  asyncHandler(matchController.updateMatch.bind(matchController)),
 );
 router.delete(
-	"/:id",
-	asyncHandler(matchController.deleteMatch.bind(matchController)),
+  "/:id",
+  asyncHandler(matchController.deleteMatch.bind(matchController)),
 );
 router.patch(
-	"/:id/playing-xi",
-	asyncHandler(matchController.updatePlayingXI.bind(matchController)),
+  "/:id/playing-xi",
+  asyncHandler(matchController.updatePlayingXI.bind(matchController)),
 );
 router.patch(
-	"/:id/toss",
-	asyncHandler(matchController.updateToss.bind(matchController)),
+  "/:id/toss",
+  asyncHandler(matchController.updateToss.bind(matchController)),
 );
 router.patch(
-	"/:id/result",
-	asyncHandler(matchController.updateResult.bind(matchController)),
+  "/:id/result",
+  asyncHandler(matchController.updateResult.bind(matchController)),
 );
 router.patch(
-	"/:id/status",
-	asyncHandler(matchController.updateStatus.bind(matchController)),
+  "/:id/status",
+  asyncHandler(matchController.updateStatus.bind(matchController)),
 );
 
 module.exports = router;
