@@ -1,11 +1,18 @@
 import { useState } from "react"
+import { useNavigate } from "react-router"
+import { deletePlayer } from "../../api/playerApis"
 import PlayerCard from "./PlayerCard"
 
-const PlayerList = ({ players }) => {
+const PlayerList = ({ players, setPlayers }) => {
   const [openId, setOpenId] = useState(null)
+  const navigate = useNavigate()
 
   const handleEdit = (id) => navigate(`/admin/players/${id}/edit`)
-  const handleDelete = (id) => console.log("delete", id)
+
+  const handleDeletePlayer = async (id) => {
+    deletePlayer(id, setPlayers)
+  }
+
   return (
     <>
       {players.length === 0 ? (
@@ -21,7 +28,7 @@ const PlayerList = ({ players }) => {
               openId={openId}
               setOpenId={setOpenId}
               onEdit={handleEdit}
-              onDelete={handleDelete}
+              onDelete={handleDeletePlayer}
             />
           ))}
         </div>

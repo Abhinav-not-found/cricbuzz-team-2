@@ -21,6 +21,14 @@ router.get(
 	asyncHandler(playerController.getAllPlayers.bind(playerController)),
 );
 
+router.get(
+	"/:id",
+	AuthMiddleware.authenticate,
+	roleMiddleware(["ADMIN"]),
+	asyncHandler(playerController.getOnePlayer.bind(playerController)),
+);
+
+
 router.patch(
 	"/:id",
 	AuthMiddleware.authenticate,

@@ -1,5 +1,4 @@
 import { clsx } from "clsx"
-import { useEffect, useRef } from "react"
 import { twMerge } from "tailwind-merge"
 
 const cn = (...args) => twMerge(clsx(...args))
@@ -20,21 +19,12 @@ const getInitials = (name) =>
     .toUpperCase()
 
 const PlayerCard = ({ player, openId, setOpenId, onEdit, onDelete }) => {
-  const ref = useRef(null)
   const isOpen = openId === player._id
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpenId(null)
-    }
-    document.addEventListener("mousedown", handler)
-    return () => document.removeEventListener("mousedown", handler)
-  }, [setOpenId])
 
   return (
     <div className='bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden relative'>
       {/* 3 dots — top right */}
-      <div ref={ref} className='absolute top-3 right-3'>
+      <div className='absolute top-3 right-3'>
         <button
           type='button'
           onClick={() => setOpenId(isOpen ? null : player._id)}
@@ -61,10 +51,7 @@ const PlayerCard = ({ player, openId, setOpenId, onEdit, onDelete }) => {
             <div className='h-px bg-gray-100' />
             <button
               type='button'
-              onClick={() => {
-                setOpenId(null)
-                onDelete(player._id)
-              }}
+              onClick={() => onDelete(player._id)}
               className='w-full flex items-center gap-2 px-3 py-2.5 text-[13px] text-red-600 hover:bg-red-50 transition-colors'
             >
               <i className='ti ti-trash text-[14px]' />

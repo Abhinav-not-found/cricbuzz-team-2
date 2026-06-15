@@ -11,6 +11,7 @@ class PlayerRepository {
 			.populate("updatedBy", "name email");
 	}
 
+
 	async findById(id) {
 		return PlayerModel.findOne({
 			_id: id,

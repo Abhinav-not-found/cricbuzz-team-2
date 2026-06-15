@@ -49,6 +49,7 @@ class AuthService {
 		if (!isMatch) throw new ApiError(401, "Invalid credentials");
 
 		const accessToken = generateAccessToken(user._id, user.role);
+		console.log("authservice=>", user.role);
 		const refreshToken = generateRefreshToken(user._id, user.role);
 
 		user.refreshToken = refreshToken;
