@@ -10,7 +10,7 @@ class AuthMiddleware {
 
 			const decoded = decodeAccessToken(token);
 
-			console.log("AuthMiddleware: ", decoded);
+			// console.log("AuthMiddleware: ", decoded);
 
 			req.user = {
 				id: decoded.id,
