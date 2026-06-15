@@ -170,7 +170,7 @@ const AppRoutes = () => {
           element: <PointsTablePage />,
         },
         {
-          path: "matches/:id/center",
+          path: "matches/:id",
           element: <MatchCenterPage />,
         },
         {
