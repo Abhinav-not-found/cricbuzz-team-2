@@ -78,6 +78,11 @@ const MatchFormPage = lazy(
   () => import("@/features/match/ui/admin/MatchFormPage"),
 )
 
+// 👇 APKA SCOREBOARD ENTRY PAGE LAZY IMPORT (Kuch badla nahi, bas add kiya)
+const ScoreboardEntryPage = lazy(
+  () => import("@/features/scoreboard/ScoreboardEntryPage"),
+)
+
 // Super Admin Pages
 const SuperAdminDashboard = lazy(
   () => import("@/features/dashboard/ui/SuperAdminDashboard"),
@@ -247,9 +252,14 @@ const AppRoutes = () => {
           element: <MatchFormPage />,
         },
         {
-  path: "commentary",
-  element: <CommentaryEntryPage />,
-},
+          path: "commentary",
+          element: <CommentaryEntryPage />,
+        },
+        // 👇 APKA SCOREBOARD ENTRY ROUTE (Kuch badla nahi, bas add kiya)
+        {
+          path: "scoreboard",
+          element: <ScoreboardEntryPage />,
+        },
       ],
     },
 
