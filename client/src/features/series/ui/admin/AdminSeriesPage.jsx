@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
+import { createSeries, deleteSeries, getSeriesList } from '../../api/seriesApi'
+
+const getApiMessage = (error, fallback) =>
+  error?.response?.data?.message || error?.message || fallback
 
 const AdminSeriesPage = () => {
-  const [seriesList, setSeriesList] = useState([
-    { id: "1", name: "Indian Premier League 2026", shortName: "IPL", season: "2026", status: "LIVE" },
-    { id: "2", name: "ICC Men's T20 World Cup", shortName: "T20WC", season: "2026", status: "UPCOMING" }
-  ])
+  const queryClient = useQueryClient()
 
   const { 
     register, 
@@ -21,21 +24,58 @@ const AdminSeriesPage = () => {
     }
   })
 
-  const onSubmit = (data) => {
-    const newSeries = {
-      id: Date.now().toString(),
-      ...data 
-    }
-    setSeriesList([newSeries, ...seriesList])
-    reset() 
-  }
+  const seriesQuery = useQuery({
+    queryKey: ['series'],
+    queryFn: getSeriesList,
+    retry: (failureCount, error) => {
+      const status = error?.response?.status
+      if ([401, 403, 429].includes(status)) return false
+      return failureCount < 2
+    },
+  })
 
+  const createMutation = useMutation({
+    mutationFn: createSeries,
+    onSuccess: () => {
+      reset()
+      toast.success('Series created')
+      queryClient.invalidateQueries({ queryKey: ['series'] })
+    },
+    onError: (error) => {
+      toast.error(getApiMessage(error, 'Unable to create series'))
+    },
+  })
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteSeries,
+    onSuccess: () => {
+      toast.success('Series deleted')
+      queryClient.invalidateQueries({ queryKey: ['series'] })
+    },
+    onError: (error) => {
+      toast.error(getApiMessage(error, 'Unable to delete series'))
+    },
+  })
+
+  const seriesList = seriesQuery.data || []
+
+  const onSubmit = (data) => {
+    createMutation.mutate({
+      name: data.name.trim(),
+      shortName: data.shortName.trim(),
+      season: data.season.trim(),
+      status: data.status,
+    })
+  }
 
   const handleDelete = (id) => {
     if (window.confirm("Delete Series?")) {
-      setSeriesList(seriesList.filter(item => item.id !== id))
+      deleteMutation.mutate(id)
     }
   }
+
+  const isSubmitting = createMutation.isPending
+  const isDeleting = deleteMutation.isPending
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 text-left font-sans text-gray-800">
@@ -93,9 +133,10 @@ const AdminSeriesPage = () => {
 
           <button 
             type="submit" 
+            disabled={isSubmitting}
             className="px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold rounded-lg transition-all"
           >
-            + Add Tournament
+            {isSubmitting ? 'Adding...' : '+ Add Tournament'}
           </button>
         </form>
       </div>
@@ -104,9 +145,17 @@ const AdminSeriesPage = () => {
         <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">Active Tournaments</h3>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {seriesList.map((series) => (
+          {seriesQuery.isLoading ? (
+            <p className="col-span-full text-center text-xs text-gray-400 py-8 bg-gray-50 rounded-xl border border-dashed">
+              Loading series...
+            </p>
+          ) : seriesQuery.isError ? (
+            <p className="col-span-full text-center text-xs text-red-500 py-8 bg-red-50 rounded-xl border border-dashed border-red-100">
+              {getApiMessage(seriesQuery.error, 'Unable to load series')}
+            </p>
+          ) : seriesList.map((series) => (
             <div 
-              key={series.id} 
+              key={series._id} 
               className="bg-white border border-gray-200 rounded-xl p-4 flex flex-col justify-between hover:border-gray-300 transition-colors"
             >
               <div>
@@ -125,17 +174,18 @@ const AdminSeriesPage = () => {
 
               <div className="mt-4 pt-3 border-t border-gray-100 flex justify-end">
                 <button 
-                  onClick={() => handleDelete(series.id)}
+                  onClick={() => handleDelete(series._id)}
+                  disabled={isDeleting}
                   className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors"
                 >
-                  Remove
+                  {isDeleting ? 'Removing...' : 'Remove'}
                 </button>
               </div>
             </div>
           ))}
         </div>
 
-        {seriesList.length === 0 && (
+        {!seriesQuery.isLoading && !seriesQuery.isError && seriesList.length === 0 && (
           <p className="text-center text-xs text-gray-400 py-8 bg-gray-50 rounded-xl border border-dashed">
             No series active right now.
           </p>
