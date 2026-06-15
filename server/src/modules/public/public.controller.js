@@ -1,5 +1,6 @@
 const httpStatus = require("http-status-codes");
 const PublicService = require("./public.service");
+const getIO = require("../../socket/socket");
 
 class PublicController {
 	constructor() {

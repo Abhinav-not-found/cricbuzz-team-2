@@ -1,5 +1,6 @@
 const httpStatus = require("http-status-codes");
 const CommentaryService = require("./commentary.service");
+const { getIO } = require("../../socket/socket");
 
 class CommentaryController {
 	constructor() {
@@ -11,6 +12,12 @@ class CommentaryController {
 			...req.body,
 			createdBy: req.user._id,
 			updatedBy: req.user._id,
+		});
+		const io = getIO();
+
+		io.emit("commentary:new", {
+			matchId: commentary.matchId,
+			data: commentary,
 		});
 
 		return res.status(httpStatus.StatusCodes.CREATED).json({

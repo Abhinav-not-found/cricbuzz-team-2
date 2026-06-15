@@ -111,13 +111,6 @@ const SuperAdminDashboard = () => {
         </div>
 
         <div className='flex gap-3 items-center'>
-          <input
-            type='text'
-            placeholder='Search users...'
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className='p-2 text-xs border rounded'
-          />
           <LogoutBtn />
         </div>
       </div>
