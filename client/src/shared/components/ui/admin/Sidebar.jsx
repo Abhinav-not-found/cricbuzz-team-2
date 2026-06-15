@@ -12,6 +12,7 @@ const Sidebar = () => {
           <Lnk path={"/admin/series"}>Series</Lnk>
           <Lnk path={"/admin/commentary"}>Live Commentary</Lnk>
           <Lnk path={"/admin/match"}>Matches</Lnk>
+          <Lnk path={"/admin/scoreboard"}> Match Scoreboard</Lnk>
         </nav>
       </div>
     </aside>
