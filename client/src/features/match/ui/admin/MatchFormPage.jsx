@@ -1,9 +1,7 @@
-import React from 'react'
+import AdminMatchPage from "./AdminMatchPage"
 
 const MatchFormPage = () => {
-  return (
-    <div>MatchFormPage</div>
-  )
+  return <AdminMatchPage />
 }
 
 export default MatchFormPage

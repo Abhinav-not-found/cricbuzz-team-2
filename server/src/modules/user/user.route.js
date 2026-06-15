@@ -7,28 +7,29 @@ const { ROLES } = require("../../constants/model.constant");
 const router = Router();
 const userController = new UserController();
 
+// All user management endpoints require SUPER_ADMIN or ADMIN
 router.use(
-	AuthMiddleware.authenticate,
-	AuthMiddleware.authorize(ROLES.SUPER_ADMIN),
+  AuthMiddleware.authenticate,
+  AuthMiddleware.authorize(ROLES.SUPER_ADMIN, ROLES.ADMIN),
 );
 
 router.get("/", asyncHandler(userController.getAllUsers.bind(userController)));
 router.post("/", asyncHandler(userController.createUser.bind(userController)));
 router.put(
-	"/:id",
-	asyncHandler(userController.updateUser.bind(userController)),
+  "/:id",
+  asyncHandler(userController.updateUser.bind(userController)),
 );
 router.patch(
-	"/:id/soft-delete",
-	asyncHandler(userController.softDeleteUser.bind(userController)),
+  "/:id/soft-delete",
+  asyncHandler(userController.softDeleteUser.bind(userController)),
 );
 router.delete(
-	"/:id",
-	asyncHandler(userController.hardDeleteUser.bind(userController)),
+  "/:id",
+  asyncHandler(userController.hardDeleteUser.bind(userController)),
 );
 router.patch(
-	"/:id/role",
-	asyncHandler(userController.changeRole.bind(userController)),
+  "/:id/role",
+  asyncHandler(userController.changeRole.bind(userController)),
 );
 
 module.exports = router;
