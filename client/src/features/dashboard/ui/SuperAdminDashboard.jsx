@@ -4,6 +4,7 @@ import UserForm from './components/UserForm'
 import UserCard from './components/UserCard'
 
 const API_BASE_URL = '/api/users';
+import LogoutBtn from "@/shared/components/ui/LogoutBtn"
 
 const SuperAdminDashboard = () => {
   const [users, setUsers] = useState([])
@@ -162,6 +163,9 @@ const SuperAdminDashboard = () => {
         </div>
 
       </div>
+    <div>
+      <h1>SuperAdminDashboard</h1>
+      <LogoutBtn />
     </div>
   )
 }

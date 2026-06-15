@@ -7,11 +7,11 @@ const Sidebar = () => {
       <div>
         <Logo className={"gap-2"} />
         <nav className='flex flex-col gap-2 mt-4'>
-          <Lnk path={"/admin"}>Home</Lnk>
           <Lnk path={"/admin/players"}>Players</Lnk>
           <Lnk path={"/admin/teams"}>Teams</Lnk>
           <Lnk path={"/admin/series"}>Series</Lnk>
           <Lnk path={"/admin/commentary"}>Live Commentary</Lnk>
+          <Lnk path={"/admin/match"}>Matches</Lnk>
         </nav>
       </div>
     </aside>

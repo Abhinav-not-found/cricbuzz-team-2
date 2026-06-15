@@ -190,8 +190,8 @@ const AppRoutes = () => {
       element: <AdminLayout />,
       children: [
         {
-          index: true,
-          element: <AdminDashboardPage />,
+          path: "players",
+          element: <AdminPlayerPage />,
         },
         {
           path: "series",
@@ -221,10 +221,7 @@ const AppRoutes = () => {
           path: "teams/:id",
           element: <SquadPage />,
         },
-        {
-          path: "players",
-          element: <AdminPlayerPage />,
-        },
+
         {
           path: "players/new",
           element: <PlayerFormPage />,
@@ -232,6 +229,10 @@ const AppRoutes = () => {
         {
           path: "players/:id/edit",
           element: <PlayerFormPage />,
+        },
+        {
+          path: "match",
+          element: <AdminMatchPage />,
         },
         {
           path: "matches",

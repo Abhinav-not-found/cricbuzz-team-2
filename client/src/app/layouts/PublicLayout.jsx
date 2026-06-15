@@ -7,7 +7,9 @@ const PublicLayout = () => {
   if (isLoading) return <p>Loading...</p>
 
   if (user && user.role === "ADMIN") {
-    return <Navigate to={"/admin"} />
+    return <Navigate to={"/admin/players"} />
+  } else if (user && user.role === "SUPER_ADMIN") {
+    return <Navigate to={"/super-admin"} />
   }
   return (
     <div>

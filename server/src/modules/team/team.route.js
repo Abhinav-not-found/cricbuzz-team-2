@@ -7,28 +7,34 @@ const { ROLES } = require("../../constants/model.constant");
 const router = Router();
 const teamController = new TeamController();
 
-router.use(AuthMiddleware.authenticate, AuthMiddleware.authorize(ROLES.ADMIN));
+// Require authentication for all routes
+router.use(AuthMiddleware.authenticate);
 
-router.post("/", asyncHandler(teamController.createTeam.bind(teamController)));
+// All authenticated users can fetch teams
 router.get("/", asyncHandler(teamController.getTeams.bind(teamController)));
 router.get("/:id", asyncHandler(teamController.getTeam.bind(teamController)));
+
+// Admin-only endpoints for creating, updating, deleting teams
+router.use(AuthMiddleware.authorize(ROLES.ADMIN, ROLES.SUPER_ADMIN));
+
+router.post("/", asyncHandler(teamController.createTeam.bind(teamController)));
 router.patch(
-	"/:id",
-	asyncHandler(teamController.updateTeam.bind(teamController)),
+  "/:id",
+  asyncHandler(teamController.updateTeam.bind(teamController)),
 );
 
 router.delete(
-	"/:id",
-	asyncHandler(teamController.deleteTeam.bind(teamController)),
+  "/:id",
+  asyncHandler(teamController.deleteTeam.bind(teamController)),
 );
 
 router.post(
-	"/:id/players",
-	asyncHandler(teamController.addPlayers.bind(teamController)),
+  "/:id/players",
+  asyncHandler(teamController.addPlayers.bind(teamController)),
 );
 router.delete(
-	"/:id/players",
-	asyncHandler(teamController.removePlayers.bind(teamController)),
+  "/:id/players",
+  asyncHandler(teamController.removePlayers.bind(teamController)),
 );
 
 module.exports = router;
