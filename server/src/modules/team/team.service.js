@@ -51,7 +51,10 @@ class TeamService {
 		const team = await this.teamRepository.findById(teamId);
 		if (!team) throw new ApiError(404, "Team not found");
 
-		const existingPlayers = team.squadPlayers.map((id) => id.toString());
+		const existingPlayers = team.squadPlayers.map((player) =>
+			player._id.toString(),
+		);
+
 		const incomingPlayers = playerIds.map((id) => id.toString());
 
 		// find duplicates
@@ -79,11 +82,11 @@ class TeamService {
 		if (!team) throw new ApiError(404, "Team not found");
 
 		const updatedPlayers = team.squadPlayers.filter(
-			(player) => !playerIds.includes(player.toString()),
+			(player) => !playerIds.includes(player._id.toString()),
 		);
 
 		return this.teamRepository.update(teamId, {
-			squadPlayers: updatedPlayers,
+			squadPlayers: updatedPlayers.map((player) => player._id),
 			updatedBy: userId,
 		});
 	}

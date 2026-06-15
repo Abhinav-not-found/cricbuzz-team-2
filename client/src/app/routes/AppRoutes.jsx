@@ -18,11 +18,11 @@ import { currentLoggedInUser } from "../slices/authAction"
 // dashboard/admin/super admin - sidebar []
 // user {super admin}
 // teamPage [done]
-// match  
+// match
 // series [Ongoing]
 // players [done]
-// commentary 
-// score 
+// commentary
+// score
 
 // ─── Lazy imports ───
 // Auth Pages
@@ -218,7 +218,7 @@ const AppRoutes = () => {
           element: <TeamFormPage />,
         },
         {
-          path: "teams/squad",
+          path: "teams/:id",
           element: <SquadPage />,
         },
         {

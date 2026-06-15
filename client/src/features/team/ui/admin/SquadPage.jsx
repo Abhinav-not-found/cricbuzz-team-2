@@ -1,180 +1,157 @@
-import { useState, useEffect, useRef } from 'react'
-import { useParams, useNavigate } from 'react-router'
-
-const roleConfig = {
-  BATSMAN:       'bg-blue-50 text-blue-700 border border-blue-200',
-  BOWLER:        'bg-red-50 text-red-600 border border-red-200',
-  ALL_ROUNDER:   'bg-green-50 text-green-700 border border-green-200',
-  WICKET_KEEPER: 'bg-amber-50 text-amber-700 border border-amber-200',
-}
-
-const squadPlayers = [
-  { _id: '1', name: 'Virat Kohli',    role: 'BATSMAN',       country: 'India', battingStyle: 'Right-hand bat' },
-  { _id: '2', name: 'Jasprit Bumrah', role: 'BOWLER',        country: 'India', battingStyle: 'Right-hand bat' },
-  { _id: '3', name: 'Hardik Pandya',  role: 'ALL_ROUNDER',   country: 'India', battingStyle: 'Right-hand bat' },
-  { _id: '4', name: 'KL Rahul',       role: 'WICKET_KEEPER', country: 'India', battingStyle: 'Right-hand bat' },
-  { _id: '5', name: 'Rohit Sharma',   role: 'BATSMAN',       country: 'India', battingStyle: 'Right-hand bat' },
-]
-
-// dummy — all players available to add
-const allPlayers = [
-  { _id: '6', name: 'Shubman Gill',  role: 'BATSMAN', country: 'India' },
-  { _id: '7', name: 'Mohammed Shami', role: 'BOWLER',  country: 'India' },
-]
-
-const getInitials = (name) =>
-  name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()
+import { useEffect, useState } from "react"
+import { useParams } from "react-router"
+import { getAllPlayers } from "@/features/player/api/playerApis"
+import PlayerCard from "@/features/player/ui/admin/PlayerCard"
+import GobackBtn from "@/shared/components/ui/GobackBtn"
+import {
+  addPlayersToTeam,
+  getTeamById,
+  removePlayersFromTeam,
+} from "../../api/teamApi"
 
 const SquadPage = () => {
-  const { id } = useParams()
-  const navigate = useNavigate()
-  const [search, setSearch] = useState('')
-  const [showAdd, setShowAdd] = useState(false)
-  const addRef = useRef(null)
+  const { id: teamId } = useParams()
+  const [players, setPlayers] = useState([]) // squad players
+  const [allPlayers, setAllPlayers] = useState([]) // all available players
+  const [openId, setOpenId] = useState(null)
+  const [showAddPlayer, setShowAddPlayer] = useState(false)
 
   useEffect(() => {
-    const handler = (e) => {
-      if (addRef.current && !addRef.current.contains(e.target)) setShowAdd(false)
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
+    getAllPlayers(setAllPlayers)
   }, [])
 
-  const filtered = squadPlayers.filter((p) =>
-    p.name.toLowerCase().includes(search.toLowerCase())
+  const handleRemovePlayer = async (playerId) => {
+    const updatedTeam = await removePlayersFromTeam(teamId, [playerId])
+
+    if (updatedTeam) {
+      setPlayers(updatedTeam.squadPlayers)
+    }
+  }
+
+  const handleAddPlayer = async (player) => {
+    const updatedTeam = await addPlayersToTeam(teamId, [player._id])
+
+    if (updatedTeam) {
+      setPlayers(updatedTeam.squadPlayers)
+      setShowAddPlayer(false)
+    }
+  }
+
+  useEffect(() => {
+    const loadData = async () => {
+      const team = await getTeamById(teamId)
+
+      if (team) {
+        setPlayers(team.squadPlayers || [])
+      }
+
+      getAllPlayers(setAllPlayers)
+    }
+
+    loadData()
+  }, [teamId])
+
+  const availablePlayers = allPlayers.filter(
+    (player) => !players.some((p) => p._id === player._id),
   )
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-
-          {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 flex-wrap gap-3">
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => navigate(-1)}
-                className="w-7 h-7 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:bg-gray-50 transition-colors"
-              >
-                <i className="ti ti-arrow-left text-[14px]" />
-              </button>
-              <div>
-                <h1 className="text-[14px] font-medium text-gray-900">India — Squad</h1>
-                <p className="text-[12px] text-gray-400 mt-0.5">{squadPlayers.length} players</p>
-              </div>
-            </div>
-
-            {/* Add player dropdown */}
-            <div ref={addRef} className="relative">
-              <button
-                type="button"
-                onClick={() => setShowAdd((p) => !p)}
-                className="h-9 px-4 bg-[#1a1a2e] hover:bg-[#1a1a2e]/90 active:scale-[0.98] text-white text-[12px] font-medium rounded-lg transition-all whitespace-nowrap"
-              >
-                + Add to team
-              </button>
-
-              {showAdd && (
-                <div className="absolute right-0 top-11 w-64 bg-white border border-gray-200 rounded-xl shadow-md z-10 overflow-hidden">
-                  <div className="px-3 py-2 border-b border-gray-100">
-                    <input
-                      type="text"
-                      placeholder="Search to add..."
-                      className="w-full text-[13px] outline-none text-gray-900 placeholder:text-gray-400"
-                    />
-                  </div>
-                  {allPlayers.map((p) => (
-                    <button
-                      key={p._id}
-                      type="button"
-                      className="w-full flex items-center gap-2.5 px-3 py-2.5 hover:bg-gray-50 transition-colors"
-                    >
-                      <div className="w-6 h-6 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] font-medium text-gray-500 flex-shrink-0">
-                        {getInitials(p.name)}
-                      </div>
-                      <div className="text-left">
-                        <p className="text-[13px] text-gray-900">{p.name}</p>
-                        <p className="text-[11px] text-gray-400">{p.role}</p>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Search */}
-          <div className="px-4 py-3 border-b border-gray-100">
-            <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-3 h-9">
-              <i className="ti ti-search text-gray-400 text-[14px]" />
-              <input
-                type="text"
-                placeholder="Search squad..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="flex-1 text-[13px] text-gray-900 outline-none bg-transparent placeholder:text-gray-400"
-              />
-            </div>
-          </div>
-
-          {/* Squad list */}
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="text-left text-[11px] text-gray-400 font-medium px-4 py-2.5">Player</th>
-                  <th className="text-left text-[11px] text-gray-400 font-medium px-4 py-2.5">Role</th>
-                  <th className="text-left text-[11px] text-gray-400 font-medium px-4 py-2.5 hidden sm:table-cell">Country</th>
-                  <th className="w-10 px-4 py-2.5" />
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.length === 0 ? (
-                  <tr>
-                    <td colSpan={4} className="px-4 py-8 text-center text-[13px] text-gray-400">
-                      No players found
-                    </td>
-                  </tr>
-                ) : (
-                  filtered.map((p) => (
-                    <tr key={p._id} className="border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-7 h-7 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-[11px] font-medium text-gray-500 flex-shrink-0">
-                            {getInitials(p.name)}
-                          </div>
-                          <span className="text-[13px] text-gray-900">{p.name}</span>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className={`text-[10px] font-medium rounded-md px-2 py-0.5 ${roleConfig[p.role]}`}>
-                          {p.role}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-[13px] text-gray-500 hidden sm:table-cell">
-                        {p.country}
-                      </td>
-                      <td className="px-4 py-3">
-                        <button
-                          type="button"
-                          className="w-7 h-7 text-sm flex items-center justify-center rounded-lg border border-red-200 text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors"
-                        >
-                          🗑️
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
+    <div className='h-full bg-gray-50 px-4 py-6 sm:px-6 lg:px-8'>
+      <GobackBtn />
+      <Header
+        playerCount={players.length}
+        showAddPlayer={showAddPlayer}
+        setShowAddPlayer={setShowAddPlayer}
+        availablePlayers={availablePlayers}
+        onAddPlayer={handleAddPlayer}
+      />
+      <PlayerGrid
+        players={players}
+        openId={openId}
+        setOpenId={setOpenId}
+        onRemove={handleRemovePlayer}
+      />
     </div>
   )
 }
 
 export default SquadPage
+
+const PlayerGrid = ({ players, openId, setOpenId, onRemove }) => {
+  console.log(players)
+  if (players.length === 0) {
+    return (
+      <div className='text-center py-16 text-[13px] text-gray-400'>
+        No players in squad
+      </div>
+    )
+  }
+
+  return (
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+      {players.map((player) => (
+        <PlayerCard
+          key={player._id}
+          player={player}
+          openId={openId}
+          setOpenId={setOpenId}
+          onDelete={onRemove}
+          hideEdit
+        />
+      ))}
+    </div>
+  )
+}
+
+const Header = ({
+  playerCount,
+  showAddPlayer,
+  setShowAddPlayer,
+  availablePlayers,
+  onAddPlayer,
+}) => {
+  return (
+    <div className='flex items-center justify-between mb-5 mt-2'>
+      <div>
+        <h1 className='text-[14px] font-medium text-gray-900'>Team Squad</h1>
+        <p className='text-[12px] text-gray-400'>{playerCount} players</p>
+      </div>
+
+      <div className='relative'>
+        <button
+          type='button'
+          onClick={() => setShowAddPlayer((prev) => !prev)}
+          className='h-9 px-4 bg-[#1a1a2e] text-white text-[13px] font-medium rounded-lg'
+        >
+          Add Player
+        </button>
+
+        {showAddPlayer && (
+          <div className='absolute right-0 top-11 w-72 bg-white border border-gray-200 rounded-xl shadow-md z-20 overflow-hidden'>
+            <div className='px-3 py-2 border-b border-gray-100'>
+              <p className='text-[12px] text-gray-500'>Available Players</p>
+            </div>
+
+            {availablePlayers.length === 0 ? (
+              <p className='p-3 text-[12px] text-gray-400'>
+                No players available
+              </p>
+            ) : (
+              availablePlayers.map((player) => (
+                <button
+                  key={player._id}
+                  type='button'
+                  onClick={() => onAddPlayer(player)}
+                  className='w-full text-left px-3 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0'
+                >
+                  <p className='text-[13px] text-gray-900'>{player.name}</p>
+                  <p className='text-[11px] text-gray-400'>{player.role}</p>
+                </button>
+              ))
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}

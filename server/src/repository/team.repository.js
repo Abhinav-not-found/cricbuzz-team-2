@@ -9,7 +9,7 @@ class TeamRepository {
 		return TeamModel.findOne({
 			_id: id,
 			isDeleted: false,
-		});
+		}).populate("squadPlayers");
 	}
 
 	async findByName(name) {
@@ -29,7 +29,7 @@ class TeamRepository {
 	async update(id, payload) {
 		return TeamModel.findByIdAndUpdate(id, payload, {
 			new: true,
-		}).populate();
+		}).populate("squadPlayers");
 	}
 }
 
