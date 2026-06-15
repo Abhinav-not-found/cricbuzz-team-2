@@ -10,6 +10,7 @@ const Sidebar = () => {
           <Lnk path={"/admin/players"}>Players</Lnk>
           <Lnk path={"/admin/teams"}>Teams</Lnk>
           <Lnk path={"/admin/series"}>Series</Lnk>
+          <Lnk path={"/admin/commentary"}>Live Commentary</Lnk>
           <Lnk path={"/admin/match"}>Matches</Lnk>
         </nav>
       </div>

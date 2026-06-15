@@ -246,6 +246,10 @@ const AppRoutes = () => {
           path: "matches/:id/edit",
           element: <MatchFormPage />,
         },
+        {
+  path: "commentary",
+  element: <CommentaryEntryPage />,
+},
       ],
     },
 
