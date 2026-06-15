@@ -1,10 +1,5 @@
-
 const AdminDashboardPage = () => {
-  return (
-    <div className='flex items-start'>
-        AdminDashboardPage
-    </div>
-  );
-};
+  return <div className='flex items-start'>AdminDashboardPage</div>
+}
 
-export default AdminDashboardPage;
+export default AdminDashboardPage
