@@ -149,14 +149,14 @@ const AppRoutes = () => {
           index: true,
           element: <HomePage />,
         },
-        {
-          path: "search",
-          element: <SearchPage />,
-        },
-        {
-          path: "series",
-          element: <SeriesListPage />,
-        },
+        // {
+        //   path: "search",
+        //   element: <SearchPage />,
+        // },
+        // {
+        //   path: "series",
+        //   element: <SeriesListPage />,
+        // },
         {
           path: "series/:id",
           element: <SeriesDetailPage />,
