@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const commentarySchema = new mongoose.Schema(
 	{
-		matchId: { type: Schema.Types.ObjectId, ref: "Match", required: true },
+		matchId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Match",
+			required: true,
+		},
 		over: { type: Number, required: true, min: 0 },
 		ball: { type: Number, required: true, min: 1, max: 6 },
 		text: { type: String, required: true, trim: true },
@@ -11,8 +15,8 @@ const commentarySchema = new mongoose.Schema(
 			enum: ["NORMAL", "FOUR", "SIX", "WICKET", "MILESTONE"],
 			default: "NORMAL",
 		},
-		createdBy: { type: Schema.Types.ObjectId, ref: "User" },
-		updatedBy: { type: Schema.Types.ObjectId, ref: "User" },
+		createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+		updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 	},
 	{ timestamps: true },
 );
