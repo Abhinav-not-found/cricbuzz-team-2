@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
-import TeamCard from '@/features/team/ui/components/TeamCard'
+import TeamCard from '../admin/TeamCard'
 
 const teams = [
   { _id: '1', name: 'India',       shortName: 'IND', logo: null, primaryColor: '#FF9933', squadPlayers: Array(15) },
