@@ -28,7 +28,7 @@ const Button = ({
       onClick={onClick}
       className={twMerge(
         clsx(
-          "rounded-lg cursor-pointer active:scale-97 font-normal tracking-normal",
+          "rounded-lg cursor-pointer active:scale-97 font-normal tracking-normal select-none",
           variants[variant],
           sizes[size],
           className,

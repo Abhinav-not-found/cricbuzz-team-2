@@ -1,3 +1,4 @@
+import Logo from "@/shared/components/ui/Logo"
 import GoogleBtn from "./GoogleBtn"
 import RegisterForm from "./register/RegisterForm"
 
@@ -5,17 +6,8 @@ const RegisterPage = () => {
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-50 px-4 py-8'>
       <div className='w-full max-w-sm bg-white border border-gray-200 rounded-2xl p-7 shadow-sm'>
-        {/* Brand */}
-        <div className='flex items-center gap-2 mb-6'>
-          <div className='w-8 h-8 bg-[#1a1a2e] rounded-lg flex items-center justify-center'>
-            <i
-              className='ti ti-device-mobile text-white text-base'
-              aria-hidden='true'
-            />
-          </div>
-          <span className='text-[15px] font-medium text-gray-900'>
-            Cricbuzz
-          </span>
+        <div className='mb-4'>
+          <Logo />
         </div>
 
         {/* Heading */}

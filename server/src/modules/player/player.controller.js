@@ -31,6 +31,15 @@ class PlayerController {
 		});
 	}
 
+	async getOnePlayer(req, res) {
+		const player = await this.playerService.getOnePlayer(req.params.id);
+
+		res.status(StatusCodes.OK).json({
+			success: true,
+			data: player,
+		});
+	}
+
 	async updatePlayer(req, res) {
 		const { id } = req.params;
 

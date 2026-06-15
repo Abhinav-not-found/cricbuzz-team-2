@@ -1,4 +1,4 @@
-const SeriesModel = require("./series.model");
+const SeriesModel = require("../models/series.model");
 
 class SeriesRepository {
 	async create(payload) {

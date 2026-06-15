@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux"
-import { Navigate, Outlet } from "react-router"
+import { Navigate } from "react-router"
+import Sidebar from "@/shared/components/ui/admin/Sidebar"
+import Topbar from "@/shared/components/ui/admin/Topbar"
 
 const AdminLayout = () => {
   const { user, authChecked } = useSelector((store) => store.auth)
@@ -9,7 +11,12 @@ const AdminLayout = () => {
   if (!user) {
     return <Navigate to={"/"} />
   }
-  return <Outlet />
+  return (
+    <div className='flex h-screen w-full bg-gray-100 font-sans text-gray-800'>
+      <Sidebar />
+      <Topbar />
+    </div>
+  )
 }
 
 export default AdminLayout

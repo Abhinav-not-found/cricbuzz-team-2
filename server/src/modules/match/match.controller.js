@@ -6,7 +6,7 @@ class MatchController {
 	}
 
 	async createMatch(req, res) {
-		const data = await this.matchService.createMatch(req.body, req.user._id);
+		const data = await this.matchService.createMatch(req.body, req.user.id);
 
 		res.status(201).json({
 			success: true,
@@ -36,7 +36,7 @@ class MatchController {
 		const data = await this.matchService.updateMatch(
 			req.params.id,
 			req.body,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({
@@ -46,7 +46,7 @@ class MatchController {
 	}
 
 	async deleteMatch(req, res) {
-		await this.matchService.deleteMatch(req.params.id, req.user._id);
+		await this.matchService.deleteMatch(req.params.id, req.user.id);
 
 		res.json({
 			success: true,
@@ -58,7 +58,7 @@ class MatchController {
 		const data = await this.matchService.updatePlayingXI(
 			req.params.id,
 			req.body.playingXI,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({
@@ -71,7 +71,7 @@ class MatchController {
 		const data = await this.matchService.updateToss(
 			req.params.id,
 			req.body,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({
@@ -84,7 +84,7 @@ class MatchController {
 		const data = await this.matchService.updateResult(
 			req.params.id,
 			req.body,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({
@@ -97,7 +97,7 @@ class MatchController {
 		const data = await this.matchService.updateStatus(
 			req.params.id,
 			req.body.status,
-			req.user._id,
+			req.user.id,
 		);
 
 		res.json({

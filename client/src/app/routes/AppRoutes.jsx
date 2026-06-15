@@ -9,6 +9,21 @@ import ScorerLayout from "../layouts/ScorerLayout"
 import SuperAdminLayout from "../layouts/SuperAdminLayout"
 import { currentLoggedInUser } from "../slices/authAction"
 
+// login [done]
+// register [done]
+
+// home/landing/ series - [listing of series]
+// match -  team A vs team B
+
+// dashboard/admin/super admin - sidebar []
+// user {super admin}
+// teamPage [done]
+// match
+// series [Ongoing]
+// players [done]
+// commentary
+// score
+
 // ─── Lazy imports ───
 // Auth Pages
 const LoginPage = lazy(() => import("@/features/auth/ui/LoginPage"))
@@ -134,14 +149,14 @@ const AppRoutes = () => {
           index: true,
           element: <HomePage />,
         },
-        {
-          path: "search",
-          element: <SearchPage />,
-        },
-        {
-          path: "series",
-          element: <SeriesListPage />,
-        },
+        // {
+        //   path: "search",
+        //   element: <SearchPage />,
+        // },
+        // {
+        //   path: "series",
+        //   element: <SeriesListPage />,
+        // },
         {
           path: "series/:id",
           element: <SeriesDetailPage />,
@@ -155,7 +170,7 @@ const AppRoutes = () => {
           element: <PointsTablePage />,
         },
         {
-          path: "matches/:id/center",
+          path: "matches/:id",
           element: <MatchCenterPage />,
         },
         {
@@ -203,7 +218,7 @@ const AppRoutes = () => {
           element: <TeamFormPage />,
         },
         {
-          path: "teams/squad",
+          path: "teams/:id",
           element: <SquadPage />,
         },
         {

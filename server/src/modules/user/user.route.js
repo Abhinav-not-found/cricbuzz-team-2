@@ -14,7 +14,10 @@ router.use(
 
 router.get("/", asyncHandler(userController.getAllUsers.bind(userController)));
 router.post("/", asyncHandler(userController.createUser.bind(userController)));
-router.put("/:id", asyncHandler(userController.updateUser.bind(userController)));
+router.put(
+	"/:id",
+	asyncHandler(userController.updateUser.bind(userController)),
+);
 router.patch(
 	"/:id/soft-delete",
 	asyncHandler(userController.softDeleteUser.bind(userController)),

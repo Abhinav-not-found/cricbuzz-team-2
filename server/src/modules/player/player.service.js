@@ -13,6 +13,12 @@ class PlayerService {
 	async getAllPlayers() {
 		return this.playerRepository.findAll();
 	}
+	async getOnePlayer(id) {
+		const player = await this.playerRepository.findById(id);
+		if (!player) throw new ApiError(404, "Player not found");
+
+		return player;
+	}
 
 	async updatePlayer(id, payload) {
 		const player = await this.playerRepository.findById(id);
