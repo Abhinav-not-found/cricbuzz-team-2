@@ -34,8 +34,10 @@ class AuthController {
 
 		res.cookie("accessToken", result.accessToken, accessTokenOptions);
 		res.cookie("refreshToken", result.refreshToken, refreshTokenOptions);
-
-		return res.redirect(`${env.CORS_ORIGIN}/admin?login=success`);
+		if (result.user.role === "ADMIN") {
+			return res.redirect(`${env.CORS_ORIGIN}/admin?login=success`);
+		}
+		return res.redirect(`${env.CORS_ORIGIN}`);
 	}
 
 	async refresh(req, res) {

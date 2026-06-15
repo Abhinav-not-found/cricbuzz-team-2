@@ -1,16 +1,23 @@
-import Button from "@/shared/components/ui/Button"
-import Navbar from "@/shared/components/ui/navbar"
+import SeriesCard from "./series/SeriesCard"
 
 const HomePage = () => {
   return (
-    <div>
-      <Navbar /> 
-      <h1>Listing of series</h1>
-      <div>
-        list of series
-        <p>series 1</p>
-        <p>series 2</p>
-        <p>series 3</p>
+    <div className='px-10'>
+      <div className='mb-4 flex flex-col'>
+        <h1 className='text-2xl tracking-tight font-medium'>Current Series</h1>
+        <div className='flex flex-col gap-3 mt-2'>
+          <SeriesCard />
+          <SeriesCard />
+          <SeriesCard />
+        </div>
+      </div>
+      <div className='mb-4 flex flex-col'>
+        <h1 className='text-2xl tracking-tight font-medium'>Upcoming Series</h1>
+        <div className='flex flex-col gap-3 mt-2'>
+          <SeriesCard />
+          <SeriesCard />
+          <SeriesCard />
+        </div>
       </div>
     </div>
   )
