@@ -1,8 +1,11 @@
-import React from 'react'
+import LogoutBtn from "@/shared/components/ui/LogoutBtn"
 
 const SuperAdminDashboard = () => {
   return (
-    <div>SuperAdminDashboard</div>
+    <div>
+      <h1>SuperAdminDashboard</h1>
+      <LogoutBtn />
+    </div>
   )
 }
 
