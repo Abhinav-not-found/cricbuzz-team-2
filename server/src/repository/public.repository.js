@@ -2,6 +2,7 @@ const Match = require("../models/match.model");
 const Series = require("../models/series.model");
 const Team = require("../models/team.model");
 const Player = require("../models/player.model");
+const Commentary = require("../models/commentary.model");
 const { MATCH_STATUS } = require("../constants/model.constant");
 
 class PublicRepository {
@@ -87,6 +88,7 @@ class PublicRepository {
 		})
 			.sort({ createdAt: -1 })
 			.populate("player");
+			
 	}
 }
 
