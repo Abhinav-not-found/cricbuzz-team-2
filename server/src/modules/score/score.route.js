@@ -21,8 +21,8 @@ router.get(
 	asyncHandler(scoreController.getScoreById.bind(scoreController)),
 );
 router.patch(
-	"/:id",
-	asyncHandler(scoreController.updateScore.bind(scoreController)),
+	"/match/:matchId",
+	asyncHandler(scoreController.updateScoreByMatchId.bind(scoreController)),
 );
 router.delete(
 	"/:id",

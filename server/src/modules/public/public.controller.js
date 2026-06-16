@@ -25,6 +25,17 @@ class PublicController {
 		});
 	}
 
+	async getMatchesBySeriesId(req, res) {
+		const { seriesId } = req.params;
+
+		const matches = await this.publicService.findBySeriesId(seriesId);
+
+		res.json({
+			success: true,
+			data: matches,
+		});
+	}
+
 	async getMatches(req, res) {
 		const data = await this.publicService.getMatches();
 

@@ -1,5 +1,6 @@
 const httpStatus = require("http-status-codes");
 const ScoreService = require("./score.service");
+const { getIO } = require("../../socket/socket");
 
 class ScoreController {
 	constructor() {
@@ -47,13 +48,18 @@ class ScoreController {
 		});
 	}
 
-	async updateScore(req, res) {
-		const score = await this.scoreService.updateScore(req.params.id, {
-			...req.body,
-			updatedBy: req.user._id,
+	async updateScoreByMatchId(req, res) {
+		const { matchId } = req.params;
+
+		const score = await this.scoreService.updateByMatchId(matchId, req.body);
+
+		const io = getIO();
+		io.emit("score:update", {
+			matchId,
+			data: score,
 		});
 
-		return res.status(httpStatus.StatusCodes.OK).json({
+		res.json({
 			success: true,
 			data: score,
 		});

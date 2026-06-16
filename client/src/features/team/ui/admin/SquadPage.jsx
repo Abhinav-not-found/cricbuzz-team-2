@@ -78,7 +78,6 @@ const SquadPage = () => {
 export default SquadPage
 
 const PlayerGrid = ({ players, openId, setOpenId, onRemove }) => {
-  console.log(players)
   if (players.length === 0) {
     return (
       <div className='text-center py-16 text-[13px] text-gray-400'>

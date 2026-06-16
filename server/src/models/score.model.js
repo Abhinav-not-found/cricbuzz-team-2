@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const scoreSchema = new Schema(
+const scoreSchema = new mongoose.Schema(
 	{
 		matchId: {
 			type: mongoose.Schema.Types.ObjectId,

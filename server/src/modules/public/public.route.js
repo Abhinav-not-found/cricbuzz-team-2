@@ -16,6 +16,11 @@ router.get(
 );
 
 router.get(
+	"/series/:seriesId/matches",
+	asyncHandler(publicController.getMatchesBySeriesId.bind(publicController)),
+);
+
+router.get(
 	"/matches",
 	asyncHandler(publicController.getMatches.bind(publicController)),
 );
