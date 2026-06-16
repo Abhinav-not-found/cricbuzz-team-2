@@ -2,7 +2,6 @@ const { Router } = require("express");
 const SeriesController = require("./series.controller");
 const asyncHandler = require("../../shared/utils/asyncHandler");
 const AuthMiddleware = require("../../middlewares/auth.middleware");
-const AuthMiddleware = require("../../middlewares/auth.middleware");
 const { ROLES } = require("../../constants/model.constant");
 
 const router = Router();
@@ -13,24 +12,24 @@ router.use(AuthMiddleware.authenticate);
 router.use(AuthMiddleware.authenticate, AuthMiddleware.authorize(ROLES.ADMIN));
 
 router.post(
-	"/",
-	asyncHandler(seriesController.createSeries.bind(seriesController)),
+  "/",
+  asyncHandler(seriesController.createSeries.bind(seriesController)),
 );
 router.get(
-	"/",
-	asyncHandler(seriesController.getSeriesList.bind(seriesController)),
+  "/",
+  asyncHandler(seriesController.getSeriesList.bind(seriesController)),
 );
 router.get(
-	"/:id",
-	asyncHandler(seriesController.getSeries.bind(seriesController)),
+  "/:id",
+  asyncHandler(seriesController.getSeries.bind(seriesController)),
 );
 router.patch(
-	"/:id",
-	asyncHandler(seriesController.updateSeries.bind(seriesController)),
+  "/:id",
+  asyncHandler(seriesController.updateSeries.bind(seriesController)),
 );
 router.delete(
-	"/:id",
-	asyncHandler(seriesController.deleteSeries.bind(seriesController)),
+  "/:id",
+  asyncHandler(seriesController.deleteSeries.bind(seriesController)),
 );
 
 module.exports = router;
