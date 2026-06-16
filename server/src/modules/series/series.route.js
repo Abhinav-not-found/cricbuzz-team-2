@@ -7,8 +7,6 @@ const { ROLES } = require("../../constants/model.constant");
 const router = Router();
 const seriesController = new SeriesController();
 
-router.use(AuthMiddleware.authenticate);
-
 router.use(AuthMiddleware.authenticate, AuthMiddleware.authorize(ROLES.ADMIN));
 
 router.post(

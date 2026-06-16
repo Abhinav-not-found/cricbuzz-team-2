@@ -1,3 +1,4 @@
+const MatchModel = require("../../models/match.model");
 const PublicRepository = require("../../repository/public.repository");
 
 class PublicService {
@@ -11,6 +12,14 @@ class PublicService {
 
 	async getSeriesById(seriesId) {
 		return this.publicRepository.getSeriesById(seriesId);
+	}
+
+	async findBySeriesId(seriesId) {
+		return MatchModel.find({ seriesId })
+			.sort({ createdAt: -1 })
+			.limit(1)
+			.populate("team1")
+			.populate("team2");
 	}
 
 	async getMatches() {

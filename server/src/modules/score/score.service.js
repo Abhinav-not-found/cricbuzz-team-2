@@ -1,4 +1,6 @@
+const ScoreModel = require("../../models/score.model");
 const ScoreRepository = require("../../repository/score.repository");
+const MatchModel = require("../../models/match.model");
 
 class ScoreService {
 	constructor() {
@@ -23,12 +25,27 @@ class ScoreService {
 		return score;
 	}
 
-	async updateScore(id, payload) {
-		const score = await this.scoreRepository.update(id, payload);
+	async updateByMatchId(matchId, payload) {
+		let score = await ScoreModel.findOne({ matchId });
 
 		if (!score) {
-			throw new Error("Score not found");
+			const match = await MatchModel.findById(matchId);
+
+			if (!match) throw new Error("Match not found");
+
+			score = await ScoreModel.create({
+				matchId,
+				innings: payload.innings || 1,
+				battingTeam: match.team1, // default assumption
+				score: payload.score || 0,
+				wickets: payload.wickets || 0,
+			});
 		}
+
+		score.score = payload.score;
+		score.wickets = payload.wickets;
+
+		await score.save();
 
 		return score;
 	}

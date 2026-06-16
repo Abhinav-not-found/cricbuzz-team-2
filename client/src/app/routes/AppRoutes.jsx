@@ -78,7 +78,6 @@ const MatchFormPage = lazy(
   () => import("@/features/match/ui/admin/MatchFormPage"),
 )
 
-// 👇 APKA SCOREBOARD ENTRY PAGE LAZY IMPORT (Kuch badla nahi, bas add kiya)
 const ScoreboardEntryPage = lazy(
   () => import("@/features/scoreboard/ScoreboardEntryPage"),
 )
@@ -154,14 +153,6 @@ const AppRoutes = () => {
           index: true,
           element: <HomePage />,
         },
-        // {
-        //   path: "search",
-        //   element: <SearchPage />,
-        // },
-        // {
-        //   path: "series",
-        //   element: <SeriesListPage />,
-        // },
         {
           path: "series/:id",
           element: <SeriesDetailPage />,
@@ -255,7 +246,6 @@ const AppRoutes = () => {
           path: "commentary",
           element: <CommentaryEntryPage />,
         },
-        // 👇 APKA SCOREBOARD ENTRY ROUTE (Kuch badla nahi, bas add kiya)
         {
           path: "scoreboard",
           element: <ScoreboardEntryPage />,
