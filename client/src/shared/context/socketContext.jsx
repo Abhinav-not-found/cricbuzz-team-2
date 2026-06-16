@@ -4,7 +4,11 @@ import { io } from "socket.io-client"
 export const socketContext = createContext(null)
 
 const socketContextWrapper = ({ children }) => {
-  const [socket] = useState(() => io("http://localhost:8000"))
+  const [socket] = useState(() =>
+    io(import.meta.env.VITE_API_URL, {
+      withCredentials: true,
+    }),
+  )
 
   useEffect(() => {
     if (!socket) return
