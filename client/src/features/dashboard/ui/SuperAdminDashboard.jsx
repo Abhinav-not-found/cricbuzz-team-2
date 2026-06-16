@@ -2,7 +2,6 @@ import axios from "axios"
 import React, { useCallback, useEffect, useState } from "react"
 import LogoutBtn from "@/shared/components/ui/LogoutBtn"
 import UserCard from "./components/UserCard"
-import UserForm from "./components/UserForm"
 
 const API_BASE_URL = "/api/users"
 
@@ -116,13 +115,6 @@ const SuperAdminDashboard = () => {
       </div>
 
       <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-        <UserForm
-          editingUser={editingUser}
-          onCreateUser={handleCreateUser}
-          onUpdateUser={handleUpdateUser}
-          onCancelEdit={() => setEditingUser(null)}
-        />
-
         <div className='lg:col-span-2 space-y-3'>
           {loading ? (
             <p>Loading users...</p>
