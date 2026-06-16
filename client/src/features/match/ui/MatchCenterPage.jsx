@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { getPublicSeriesById } from "@/features/series/api/seriesApi"
+import { socketContext } from "@/shared/context/socketContext"
 import MatchCommentarySection from "../MatchCommentarySection"
 
 const MatchCenterPage = () => {
   const { id } = useParams()
   const [matches, setMatches] = useState([])
+  const { socket } = useContext(socketContext)
+  const [score, setScore] = useState(null)
 
   useEffect(() => {
     getPublicSeriesById(id, setMatches)
@@ -15,6 +18,22 @@ const MatchCenterPage = () => {
 
   const team1 = match?.team1
   const team2 = match?.team2
+
+  useEffect(() => {
+    if (!socket) return
+
+    const handleScoreUpdate = (payload) => {
+      if (payload.matchId !== matches?.[0]?._id) return
+
+      setScore(payload.data)
+    }
+
+    socket.on("score:update", handleScoreUpdate)
+
+    return () => {
+      socket.off("score:update", handleScoreUpdate)
+    }
+  }, [socket, matches])
 
   return (
     <div className='min-h-screen bg-gray-50 p-4 md:p-8 text-gray-800'>
@@ -64,9 +83,7 @@ const MatchCenterPage = () => {
           <div className='flex justify-center'>
             <div className='w-56 h-56 rounded-full border shadow-sm flex flex-col items-center justify-center bg-white'>
               <span className='text-sm text-gray-500'>LIVE SCORE</span>
-              <span className='text-3xl font-bold'>
-                {match?.result || "0 - 0"}
-              </span>
+              <span className='text-3xl font-bold'>{`${score?.score || 0}/${score?.wickets || 0}`}</span>
             </div>
           </div>
 
