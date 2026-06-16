@@ -9,7 +9,6 @@ const commentaryLive = () => {
 		if (!socket) return;
 
 		const handler = (data) => {
-			console.log("NEW COMMENTARY:", data);
 			setCommentary((prev) => [data.data, ...prev]);
 		};
 

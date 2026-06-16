@@ -1,13 +1,12 @@
 const ApiError = require("../../shared/utils/ApiError");
 const UserRepo = require("../../repository/user.repository");
 const { hashPassword } = require("../../shared/utils/bcrypt");
-const bcrypt = require("bcryptjs");
 const { decodeRefreshToken } = require("../../shared/utils/jwt");
-
 const {
 	generateAccessToken,
 	generateRefreshToken,
 } = require("../../shared/utils/token");
+const { comparePassword } = require("../../shared/utils/bcrypt");
 
 class AuthService {
 	constructor() {
@@ -45,11 +44,10 @@ class AuthService {
 		const user = await this.userRepo.findByEmail(email);
 		if (!user) throw new ApiError(404, "User not found");
 
-		const isMatch = await bcrypt.compare(password, user.password);
+		const isMatch = await comparePassword(password, user.password);
 		if (!isMatch) throw new ApiError(401, "Invalid credentials");
 
 		const accessToken = generateAccessToken(user._id, user.role);
-		// console.log("authservice=>", user.role);
 		const refreshToken = generateRefreshToken(user._id, user.role);
 
 		user.refreshToken = refreshToken;

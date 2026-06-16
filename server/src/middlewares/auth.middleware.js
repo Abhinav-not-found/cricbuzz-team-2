@@ -1,16 +1,16 @@
 const ApiError = require("../shared/utils/ApiError");
 const { decodeAccessToken } = require("../shared/utils/jwt");
 const UserRepo = require("../repository/user.repository");
+const { StatusCodes } = require("http-status-codes");
 
 class AuthMiddleware {
 	static async authenticate(req, _, next) {
 		try {
 			const token = req.cookies?.accessToken;
-			if (!token) throw new ApiError(401, "No token provided");
+			if (!token)
+				throw new ApiError(StatusCodes.UNAUTHORIZED, "No token provided");
 
 			const decoded = decodeAccessToken(token);
-
-			// console.log("AuthMiddleware: ", decoded);
 
 			req.user = {
 				id: decoded.id,
@@ -20,7 +20,9 @@ class AuthMiddleware {
 			next();
 		} catch (error) {
 			next(
-				error instanceof ApiError ? error : new ApiError(401, "Unauthorized"),
+				error instanceof ApiError
+					? error
+					: new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized"),
 			);
 		}
 	}
@@ -31,8 +33,10 @@ class AuthMiddleware {
 				const userRepo = new UserRepo();
 				const user = await userRepo.findById(req.user?.id);
 
-				if (!user || user.isDeleted) throw new ApiError(401, "Unauthorized");
-				if (!roles.includes(user.role)) throw new ApiError(403, "Forbidden");
+				if (!user || user.isDeleted)
+					throw new ApiError(StatusCodes.UNAUTHORIZED, "Unauthorized");
+				if (!roles.includes(user.role))
+					throw new ApiError(StatusCodes.FORBIDDEN, "Forbidden");
 
 				req.user = {
 					id: user._id,
@@ -42,7 +46,9 @@ class AuthMiddleware {
 				next();
 			} catch (error) {
 				next(
-					error instanceof ApiError ? error : new ApiError(403, "Forbidden"),
+					error instanceof ApiError
+						? error
+						: new ApiError(StatusCodes.FORBIDDEN, "Forbidden"),
 				);
 			}
 		};
