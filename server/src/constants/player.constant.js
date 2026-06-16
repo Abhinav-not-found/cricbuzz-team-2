@@ -1,0 +1,4 @@
+
+const PLAYER_ROLES = ["BATSMAN", "BOWLER", "ALL_ROUNDER", "WICKET_KEEPER"];
+
+module.exports = PLAYER_ROLES;

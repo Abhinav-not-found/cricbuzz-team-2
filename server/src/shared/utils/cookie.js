@@ -1,4 +1,5 @@
 const env = require("../../config/env");
+const COOKIE_CONFIG = require("../../constants/cookie.constant");
 
 const cookieOptions = {
 	httpOnly: true,
@@ -8,12 +9,12 @@ const cookieOptions = {
 
 const accessTokenOptions = {
 	...cookieOptions,
-	maxAge: 15 * 60 * 1000,
+	maxAge: COOKIE_CONFIG.accessTokenMaxAge,
 };
 
 const refreshTokenOptions = {
 	...cookieOptions,
-	maxAge: 24 * 60 * 60 * 1000,
+	maxAge: COOKIE_CONFIG.refreshTokenMaxAge,
 };
 
 module.exports = {

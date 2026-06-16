@@ -7,7 +7,7 @@ function initSocket(io) {
 	io.on("connection", (socket) => {
 		logger.info("a user connected");
 
-		socket.emit("connected", { message: "message changed" });
+		socket.emit("connected", { message: "message sent from backend" });
 	});
 }
 

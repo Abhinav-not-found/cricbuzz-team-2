@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const PLAYER_ROLES = require("../constants/player.constant");
 
 const playerSchema = new mongoose.Schema(
 	{
@@ -6,7 +7,7 @@ const playerSchema = new mongoose.Schema(
 		image: String,
 		role: {
 			type: String,
-			enum: ["BATSMAN", "BOWLER", "ALL_ROUNDER", "WICKET_KEEPER"],
+			enum: PLAYER_ROLES,
 			required: true,
 		},
 		country: { type: String, required: true, trim: true },
